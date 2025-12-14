@@ -175,10 +175,10 @@ fn main() {
             
             let provider = match args.ai_provider.as_str() {
                 "openai" => AIProvider::OpenAI {
-                    model: args.ai_model.unwrap_or_else(|| "gpt-4".to_string()),
+                    model: args.ai_model.as_ref().map(|s| s.clone()).unwrap_or_else(|| "gpt-4".to_string()),
                 },
                 "google" => AIProvider::Google {
-                    model: args.ai_model.unwrap_or_else(|| "gemini-pro".to_string()),
+                    model: args.ai_model.as_ref().map(|s| s.clone()).unwrap_or_else(|| "gemini-pro".to_string()),
                 },
                 _ => {
                     eprintln!("Unknown AI provider: {}. Use 'openai' or 'google'.", args.ai_provider);

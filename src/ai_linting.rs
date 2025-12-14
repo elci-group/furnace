@@ -1,5 +1,5 @@
 #[cfg(feature = "ai")]
-use async_openai::{Client, types::{CreateChatCompletionRequestArgs, ChatCompletionRequestMessage, Role}};
+use async_openai::{Client, types::{CreateChatCompletionRequestArgs, ChatCompletionRequestMessage}};
 #[cfg(feature = "ai")]
 use serde_json::json;
 use crate::types::RustFileSnapshot;
@@ -142,27 +142,25 @@ impl AILinter {
         let api_key = std::env::var("OPENAI_API_KEY")
             .map_err(|_| "OPENAI_API_KEY environment variable not set".to_string())?;
         
-        let client = Client::new().with_api_key(api_key);
+        let client = Client::with_config(
+            async_openai::config::OpenAIConfig::new().with_api_key(api_key)
+        );
         
         let request = CreateChatCompletionRequestArgs::default()
             .model(model)
             .messages(vec![
-                ChatCompletionRequestMessage {
-                    role: Role::System,
-                    content: Some("You are an expert Rust code reviewer and architect. Provide specific, actionable insights.".to_string()),
-                    name: None,
-                    tool_calls: None,
-                    tool_call_id: None,
-                    function_call: None,
-                },
-                ChatCompletionRequestMessage {
-                    role: Role::User,
-                    content: Some(context.to_string()),
-                    name: None,
-                    tool_calls: None,
-                    tool_call_id: None,
-                    function_call: None,
-                },
+                ChatCompletionRequestMessage::System(
+                    async_openai::types::ChatCompletionRequestSystemMessageArgs::default()
+                        .content("You are an expert Rust code reviewer and architect. Provide specific, actionable insights.")
+                        .build()
+                        .map_err(|e| format!("Failed to build system message: {}", e))?
+                ),
+                ChatCompletionRequestMessage::User(
+                    async_openai::types::ChatCompletionRequestUserMessageArgs::default()
+                        .content(context.to_string())
+                        .build()
+                        .map_err(|e| format!("Failed to build user message: {}", e))?
+                ),
             ])
             .max_tokens(self.max_tokens as u32)
             .temperature(self.temperature)
@@ -349,27 +347,25 @@ impl AILinter {
         let api_key = std::env::var("OPENAI_API_KEY")
             .map_err(|_| "OPENAI_API_KEY environment variable not set".to_string())?;
         
-        let client = Client::new().with_api_key(api_key);
+        let client = Client::with_config(
+            async_openai::config::OpenAIConfig::new().with_api_key(api_key)
+        );
         
         let request = CreateChatCompletionRequestArgs::default()
             .model(model)
             .messages(vec![
-                ChatCompletionRequestMessage {
-                    role: Role::System,
-                    content: Some("You are a friendly teacher explaining programming to absolute beginners. Use simple language, analogies, and emojis.".to_string()),
-                    name: None,
-                    tool_calls: None,
-                    tool_call_id: None,
-                    function_call: None,
-                },
-                ChatCompletionRequestMessage {
-                    role: Role::User,
-                    content: Some(context.to_string()),
-                    name: None,
-                    tool_calls: None,
-                    tool_call_id: None,
-                    function_call: None,
-                },
+                ChatCompletionRequestMessage::System(
+                    async_openai::types::ChatCompletionRequestSystemMessageArgs::default()
+                        .content("You are a friendly teacher explaining programming to absolute beginners. Use simple language, analogies, and emojis.")
+                        .build()
+                        .map_err(|e| format!("Failed to build system message: {}", e))?
+                ),
+                ChatCompletionRequestMessage::User(
+                    async_openai::types::ChatCompletionRequestUserMessageArgs::default()
+                        .content(context.to_string())
+                        .build()
+                        .map_err(|e| format!("Failed to build user message: {}", e))?
+                ),
             ])
             .max_tokens(self.max_tokens as u32)
             .temperature(0.7) // Higher temperature for more creative explanations
