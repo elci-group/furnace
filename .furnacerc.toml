@@ -1,0 +1,7 @@
+# Simple default configuration - all lints disabled by default
+# Copy from .furnacerc.toml.example to enable specific lints
+
+ignore = []
+
+[lints]
+enabled = true

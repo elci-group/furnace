@@ -1,0 +1,67 @@
+# Furnace Configuration Example
+# This file demonstrates all available linting options
+
+# Ignore patterns (exclude from scanning)
+ignore = ["target", "tests", "benches", "examples"]
+
+[lints]
+# Master switch: set to false to disable all linting
+enabled = true
+
+# ===== COMPLEXITY LINTS =====
+# These check for overly complex code structures
+[lints.complexity]
+# Warn if function has more than N arguments
+max_args = 7
+
+# Warn if struct has more than N fields
+max_fields = 15
+
+# Warn if function body exceeds N lines (not yet implemented)
+# max_function_lines = 50
+
+# Warn if struct size exceeds N fields (not yet implemented)
+# max_struct_size = 20
+
+# ===== NAMING CONVENTION LINTS =====
+[lints.naming]
+# Enforce snake_case for function names
+enforce_snake_case_functions = true
+
+# Enforce snake_case for variable names
+enforce_snake_case_variables = true
+
+# Enforce PascalCase for type names (structs, enums)
+enforce_pascal_case_types = true
+
+# Enforce SCREAMING_SNAKE_CASE for constants (not yet implemented)
+# enforce_screaming_snake_case_constants = true
+
+# List of discouraged variable/parameter names
+discouraged_names = ["foo", "bar", "baz", "temp", "data", "result"]
+
+# ===== STYLE LINTS =====
+[lints.style]
+# Require doc comments on public items (not yet implemented)
+# require_doc_comments = true
+
+# Warn about TODO/FIXME comments (not yet implemented)
+# warn_todo_comments = false
+
+# ===== AI-POWERED LINTS =====
+# Note: Requires --features ai and OPENAI_API_KEY or GOOGLE_API_KEY environment variable
+[lints.ai]
+# Enable AI-powered analysis (also requires --ai-lint flag)
+enabled = false
+
+# Provider: "openai" or "google"
+provider = "openai"
+
+# Model to use
+model = "gpt-4"  # or "gpt-3.5-turbo" for OpenAI, "gemini-pro" for Google
+
+# Maximum tokens for response (affects cost)
+max_tokens = 4000
+
+# Temperature for generation (0.0-1.0, lower = more deterministic)
+temperature = 0.3
