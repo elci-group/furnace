@@ -17,7 +17,7 @@ Sleep 1s
 Enter
 Enter
 
-Type "cargo run -- . --plain"
+Type "furnace . --plain"
 Sleep 500ms
 Enter
 

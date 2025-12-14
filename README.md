@@ -1,10 +1,18 @@
 # 🔥 Furnace
 
-**AI-Powered Semantic Rust Code Analyzer with 10 Output Styles**
+<p align="center">
+  <img src="./logo.png" alt="Furnace Logo" width="400"/>
+</p>
 
-[![Rust](https://img.shields.io/badge/rust-1.70%2B-orange.svg)](https://www.rust-lang.org/)
-[![Tests](https://img.shields.io/badge/tests-21%20passing-brightgreen.svg)]()
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+<p align="center">
+  <strong>AI-Powered Semantic Rust Code Analyzer with 10 Output Styles</strong>
+</p>
+
+<p align="center">
+  <a href="https://www.rust-lang.org/"><img src="https://img.shields.io/badge/rust-1.70%2B-orange.svg" alt="Rust"></a>
+  <a href="#"><img src="https://img.shields.io/badge/tests-21%20passing-brightgreen.svg" alt="Tests"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+</p>
 
 Furnace is an elite-tier CLI tool that goes beyond simple file walking to provide intelligent, semantic analysis of Rust projects. With 10 distinct output aesthetics, optional AI-powered insights, and beginner-friendly explanations, it serves everyone from vibe coders to senior architects.
 
@@ -34,50 +42,59 @@ Furnace is an elite-tier CLI tool that goes beyond simple file walking to provid
 ### Installation
 
 ```bash
-# Clone
-git clone https://github.com/yourusername/furnace
+# Clone repository
+git clone https://github.com/elci-group/furnace
 cd furnace
 
-# Build (without AI)
-cargo build --release
-
-# Build with AI features
-cargo build --release --features ai
+# Run installer (builds and installs to /usr/local/bin)
+./install.sh
 ```
+
+The installer will:
+- Build furnace in release mode
+- Install to `/usr/local/bin` (or `~/.local/bin` if no sudo access)
+- Make it globally available as `furnace`
 
 ### Basic Usage
 
 ```bash
-# Simple tree view
-cargo run -- .
+# Analyze current directory with tree view
+furnace .
 
 # Use different styles
-cargo run -- . --plain     # Simple text
-cargo run -- . --tree      # Hierarchical with emojis
-cargo run -- . --grid      # Table layout
-cargo run -- . --compact   # Dense format
+furnace . --plain     # Simple text
+furnace . --tree      # Hierarchical with emojis (default)
+furnace . --grid      # Table layout
+furnace . --compact   # Dense format
 
 # Compose styles
-cargo run -- . --tree --detail verbose
-cargo run -- . --layout grid --color standard
+furnace . --tree --detail verbose
+furnace . --layout grid --color standard
 
-# JSON output
-cargo run -- . --format json
+# JSON output for tooling
+furnace . --format json
+
+# Analyze specific project
+furnace /path/to/rust/project --tree
 ```
 
 ### AI Features (Optional)
 
 ```bash
+# Build with AI support
+cargo build --release --features ai
+./install.sh
+
 # Technical code review
 export OPENAI_API_KEY="sk-..."
-cargo run --features ai -- . --ai-lint --tree
+furnace . --ai-lint --tree
 
 # Layman explanations for beginners
-cargo run --features ai -- . --layman=openai
+furnace . --layman=openai
 
 # Use Google Gemini instead
 export GOOGLE_API_KEY="..."
-cargo run --features ai -- . --layman=google
+furnace . --layman=google
 ```
 
 ## 📊 Output Styles
@@ -109,13 +126,13 @@ Customize any preset with orthogonal modifiers:
 **Example combinations:**
 ```bash
 # Tree layout with minimal detail
-cargo run -- . --tree --detail minimal
+furnace . --tree --detail minimal
 
 # Grid with colors
-cargo run -- . --layout grid --color standard
+furnace . --layout grid --color standard
 
 # Custom: plain layout + verbose + badges
-cargo run -- . --layout plain --detail verbose --color badges
+furnace . --layout plain --detail verbose --color badges
 ```
 
 ## 🧹 Linting
@@ -231,10 +248,10 @@ cargo test --test integration_test
 
 ## 🎯 Use Cases
 
-1. **Code Review**: `--ai-lint` for automated insights
-2. **Onboarding**: `--layman` for beginner-friendly explanations
-3. **CI/CD**: `--compact --format json` for automated checks
-4. **Documentation**: `--tree` or `--grid` for README snippets
+1. **Code Review**: `furnace . --ai-lint` for automated insights
+2. **Onboarding**: `furnace . --layman` for beginner-friendly explanations
+3. **CI/CD**: `furnace . --compact --format json` for automated checks
+4. **Documentation**: `furnace . --tree` or `furnace . --grid` for README snippets
 5. **Learning**: Explore unfamiliar codebases with AI explanations
 
 ## 🛠️ Development

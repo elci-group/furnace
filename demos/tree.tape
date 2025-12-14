@@ -17,7 +17,7 @@ Sleep 1s
 Enter
 Enter
 
-Type "cargo run -- . --tree"
+Type "furnace . --tree"
 Sleep 500ms
 Enter
 
