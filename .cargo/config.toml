@@ -1,0 +1,34 @@
+# Supply Chain Resilience Configuration
+# This file implements Phase 1 of the technical directive for CI reliability
+
+[registries.crates-io]
+# Primary registry
+index = "https://index.crates.io/"
+
+# Network configuration for resilience
+[net]
+# Retry failed network operations
+retry = 3
+# Use git CLI for fetching (more reliable)
+git-fetch-with-cli = true
+# Timeout for network operations
+timeout = 30
+
+# HTTP-specific settings
+[http]
+# Timeout for HTTP requests
+timeout = 30
+# Multiplex connections for better performance
+multiplexing = true
+# Check if remote server supports HTTP/2
+check-revoke = false
+
+# Build performance
+[build]
+# Parallel build jobs
+jobs = 4
+
+# Environment variables for CI
+[env]
+# Ensure network retries in all cargo operations
+CARGO_NET_RETRY = "3"
